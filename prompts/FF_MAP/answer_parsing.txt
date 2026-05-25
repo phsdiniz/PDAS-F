@@ -1,0 +1,19 @@
+O DIÁLOGO dado tem como objetivo preencher o FORMULÁRIO dado. Tens de decidir qual a opção a tomar a seguir.
+As opções para as acções seguintes são:
+
+1. "information_extraction": Escolhe esta ação se a resposta dada contém toda a informação necessária.
+2. "follow_up_question": Escolher esta ação se a resposta dada for inválida ou apenas cobrir parte da informação necessária.
+3. "repeat_question": Escolha esta opção se o utilizador pediu esclarecimentos ou não respondeu à pergunta. 
+
+Dê o seu resultado no seguinte formato: {"next action": ""}
+
+DIÁLOGO:
+[Inserir 1]
+
+INFORMAÇÃO A EXTRAIR:
+[Inserir 2]
+
+FORMULÁRIO:
+[Inserir 3]
+
+

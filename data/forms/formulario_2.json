@@ -1,0 +1,234 @@
+{
+    "titulo": "Feedback sobre o Portal do Serviço Nacional de Saúde (SNS)",
+    "descricao": "Formulário para coleta de feedback sobre a experiência de uso do Portal SNS, incluindo satisfação, acessibilidade e sugestões de melhoria.",
+    "secoes": [
+        {
+            "id": "secao1",
+            "titulo": "Identificação do Utilizador",
+            "campos": [
+                {
+                    "id": "campo1",
+                    "type": "radio",
+                    "label": "Identificação",
+                    "required": true,
+                    "options": ["Cidadão/utente", "Profissional de Saúde"],
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao2",
+            "titulo": "Uso do Portal SNS",
+            "campos": [
+                {
+                    "id": "campo2",
+                    "type": "radio",
+                    "label": "Com que frequência acede ao Portal SNS?",
+                    "required": true,
+                    "options": ["Diariamente", "Semanalmente", "Mensalmente", "É a primeira vez que acedo"],
+                    "value": null
+                },
+                {
+                    "id": "campo3",
+                    "type": "text",
+                    "label": "Que informações procura quando visita o Portal SNS?",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao3",
+            "titulo": "Avaliação do Portal SNS",
+            "campos": [
+                {
+                    "id": "campo4",
+                    "type": "radio",
+                    "label": "Organização das áreas e suas informações",
+                    "required": true,
+                    "options": ["1", "2", "3", "4", "5"],
+                    "value": null
+                },
+                {
+                    "id": "campo5",
+                    "type": "radio",
+                    "label": "Clareza da informação apresentada",
+                    "required": true,
+                    "options": ["1", "2", "3", "4", "5"],
+                    "value": null
+                },
+                {
+                    "id": "campo6",
+                    "type": "radio",
+                    "label": "Frequência/rapidez de atualização de conteúdos",
+                    "required": true,
+                    "options": ["1", "2", "3", "4", "5"],
+                    "value": null
+                },
+                {
+                    "id": "campo7",
+                    "type": "radio",
+                    "label": "Velocidade de navegação",
+                    "required": true,
+                    "options": ["1", "2", "3", "4", "5"],
+                    "value": null
+                },
+                {
+                    "id": "campo8",
+                    "type": "radio",
+                    "label": "Satisfação global",
+                    "required": true,
+                    "options": ["1", "2", "3", "4", "5"],
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao4",
+            "titulo": "Acessibilidade",
+            "campos": [
+                {
+                    "id": "campo9",
+                    "type": "radio",
+                    "label": "É um utilizador com necessidades especiais?",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "campo10",
+                    "type": "radio",
+                    "label": "Numa escala de 1 a 5 (sendo 1 má e 5 muito boa), classifique a acessibilidade do Portal SNS",
+                    "required": false,
+                    "options": ["1", "2", "3", "4", "5"],
+                    "value": null,
+                    "condition": {
+                        "if": "campo9 == 'Sim'",
+                        "show": ["campo10"]
+                    }
+                },
+                {
+                    "id": "campo11",
+                    "type": "text",
+                    "label": "Quais as principais dificuldades que encontra?",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "campo9 == 'Sim'",
+                        "show": ["campo11"]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "secao5",
+            "titulo": "Áreas de Interesse",
+            "campos": [
+                {
+                    "id": "campo12",
+                    "type": "checkbox",
+                    "label": "Serviço Nacional de Saúde",
+                    "required": false,
+                    "options": [
+                        "Reforma do SNS",
+                        "Rede de Cuidados de Saúde Primários",
+                        "Rede de Cuidados de Saúde Hospitalares",
+                        "Rede Nacional de Cuidados Continuados Integrados",
+                        "Cuidados de Saúde Transfronteiriços",
+                        "Taxas Moderadoras",
+                        "Farmácias",
+                        "Instituições de Saúde",
+                        "Pesquisa de Medicamento"
+                    ],
+                    "value": null
+                },
+                {
+                    "id": "campo13",
+                    "type": "checkbox",
+                    "label": "Institucional",
+                    "required": false,
+                    "options": [
+                        "Ministério da Saúde",
+                        "Política de Saúde",
+                        "Estratégia Nacional para a Qualidade na Saúde",
+                        "Plano Nacional de Saúde",
+                        "Programas de Saúde Prioritários",
+                        "Parceiros Institucionais",
+                        "Instrumentos de Gestão",
+                        "Centros de Referência",
+                        "Sistemas de Informação da Saúde",
+                        "SIMPLEX+"
+                    ],
+                    "value": null
+                },
+                {
+                    "id": "campo14",
+                    "type": "checkbox",
+                    "label": "Cidadão",
+                    "required": false,
+                    "options": [
+                        "Marcação de Consultas e Renovação de Medicação",
+                        "Guia de Tratamento",
+                        "Testamento Vital",
+                        "Simulador e Pedido Isenção de Taxas Moderadoras",
+                        "SIGA SNS - Sistema Integrado de Gestão do Acesso"
+                    ],
+                    "value": null
+                },
+                {
+                    "id": "campo15",
+                    "type": "checkbox",
+                    "label": "Profissional",
+                    "required": false,
+                    "options": [
+                        "eProfissional",
+                        "Gestão e Planeamento de Recursos Humanos",
+                        "Normas e as Orientações Clínicas",
+                        "Serviço SMS-DGS sobre Publicações de Normas e Orientações Clínicas"
+                    ],
+                    "value": null
+                },
+                {
+                    "id": "campo16",
+                    "type": "checkbox",
+                    "label": "Transparência",
+                    "required": false,
+                    "options": [
+                        "Benchmark SNS",
+                        "Dashboard DGS",
+                        "BI USF",
+                        "Monitorização Infarmed"
+                    ],
+                    "value": null
+                },
+                {
+                    "id": "campo17",
+                    "type": "checkbox",
+                    "label": "Monitorização SNS",
+                    "required": false,
+                    "options": [
+                        "Tempos de Espera na Saúde",
+                        "Saúde em Tempo Real – Plataforma saúde Sazonal",
+                        "Educação, Literacia e Autocuidados",
+                        "Notícias",
+                        "Vídeos"
+                    ],
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao6",
+            "titulo": "Sugestões",
+            "campos": [
+                {
+                    "id": "campo18",
+                    "type": "text",
+                    "label": "Que outras informações ou funcionalidades considera relevantes estarem presentes no Portal SNS?",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        }
+    ]
+}

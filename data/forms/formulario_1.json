@@ -1,0 +1,47 @@
+{
+    "titulo": "Pedido de Atualização de Morada no Portal das Finanças",
+    "descricao": "Formulário simples para atualizar a morada fiscal no Portal das Finanças, exigindo apenas dados básicos do utente.",
+    "secoes": [
+    {
+        "id": "secao1",
+        "titulo": "Dados Pessoais",
+        "campos": [
+        {
+            "id": "campo1",
+            "type": "text",
+            "label": "Nome completo",
+            "required": true,
+            "value": null
+        },
+        {
+            "id": "campo2",
+            "type": "text",
+            "label": "NIF",
+            "required": true,
+            "value": null
+        },
+        {
+            "id": "campo3",
+            "type": "text",
+            "label": "Nova morada",
+            "required": true,
+            "value": null
+        },
+        {
+            "id": "campo4",
+            "type": "text",
+            "label": "E-mail para confirmação",
+            "required": true,
+            "value": null
+        },
+        {
+            "id": "campo5",
+            "type": "date",
+            "label": "Data de nascimento",
+            "required": true,
+            "value": null
+        }
+        ]
+    }
+    ]
+}

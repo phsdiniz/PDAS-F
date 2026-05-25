@@ -1,0 +1,1 @@
+"""utils/ — Utilitários partilhados entre arquitecturas."""

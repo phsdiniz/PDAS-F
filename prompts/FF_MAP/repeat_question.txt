@@ -1,0 +1,13 @@
+É-lhe dado um pequeno diálogo, no qual a resposta não corresponde ao que era esperado. 
+Também lhe é dada o formulário, na qual se baseia o diálogo. 
+A sua tarefa é escrever uma nova pergunta que peça a mesma informação, mas que também especifique o que estava errado com a resposta anterior e incentive o utilizador a dar uma resposta melhor. 
+Devolve apenas a nova pergunta e nada mais. Devolve no seguinte formato: {"new question": ""}
+
+DIÁLOGO:
+[Inserir 1]
+
+INFORMAÇÃO A EXTRAIR:
+[Inserir 2]
+
+SECÇÃO DO FORMULÁRIO:
+[Inserir 3]

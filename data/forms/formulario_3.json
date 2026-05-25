@@ -1,0 +1,234 @@
+{
+  "titulo": "Comunicação Prévia de Obras Isentas de Licença - Câmara Municipal de Lisboa",
+  "descricao": "Formulário para comunicação prévia de obras de reduzida complexidade, nos termos do artigo 6.º-B do Decreto-Lei n.º 555/99, alterado pelo Decreto-Lei n.º 10/2024 (RJUE). Aplica-se a remodelações interiores sem alteração de estrutura ou fachada. O requerente assume responsabilidade pela conformidade com o Regulamento Geral das Edificações Urbanas (RGEU) e Plano Diretor Municipal (PDM).",
+  "secoes": [
+    {
+      "id": "secao1",
+      "titulo": "Identificação do Requerente",
+      "campos": [
+        {
+          "id": "campo1",
+          "type": "text",
+          "label": "Nome Completo (conforme cartão de cidadão)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo2",
+          "type": "text",
+          "label": "Data de nascimento (AAAA-MM-DD)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo3",
+          "type": "text",
+          "label": "Número de Identificação Fiscal (NIF)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo4",
+          "type": "radio",
+          "label": "Sexo",
+          "options": ["M", "F"],
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo5",
+          "type": "radio",
+          "label": "Estado Civil",
+          "options": ["Solteiro", "Casado", "Divorciado", "Viúvo", "União de Facto"],
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo6",
+          "type": "text",
+          "label": "Filiação (pai)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo7",
+          "type": "text",
+          "label": "Filiação (mãe)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo8",
+          "type": "text",
+          "label": "Número do Bilhete de Identidade",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo9",
+          "type": "text",
+          "label": "Data de emissão (AAAA-MM-DD)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo10",
+          "type": "text",
+          "label": "Morada (rua, número)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo11",
+          "type": "text",
+          "label": "Código Postal",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo12",
+          "type": "text",
+          "label": "Freguesia",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo13",
+          "type": "text",
+          "label": "Concelho",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo14",
+          "type": "text",
+          "label": "Distrito",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo15",
+          "type": "text",
+          "label": "Telefone",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo16",
+          "type": "text",
+          "label": "Telemóvel (com indicativo +351)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo17",
+          "type": "text",
+          "label": "Endereço de correio eletrónico",
+          "required": true,
+          "value": null
+        }
+      ]
+    },
+    {
+      "id": "secao2",
+      "titulo": "Identificação do Imóvel",
+      "campos": [
+        {
+          "id": "campo18",
+          "type": "text",
+          "label": "Artigo matricial do imóvel (número da matriz predial urbana)",
+          "required": true,
+          "value": null,
+          "description": "Consultar caderneta predial na Autoridade Tributária ou Conservatória do Registo Predial."
+        },
+        {
+          "id": "campo19",
+          "type": "text",
+          "label": "Morada completa (rua, número, código postal, freguesia)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo20",
+          "type": "radio",
+          "label": "O imóvel é propriedade do requerente?",
+          "options": ["Sim", "Não"],
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo21",
+          "type": "textarea",
+          "label": "Autorização do proprietário: Descreva a relação jurídica com o proprietário (ex.: contrato de arrendamento, procuração) e anexe documento comprovativo (máximo 100 palavras)",
+          "required": false,
+          "value": null,
+          "condition": {
+            "if": "campo20 == 'Não'",
+            "show": ["campo21"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "secao3",
+      "titulo": "Descrição da Obra",
+      "campos": [
+        {
+          "id": "campo22",
+          "type": "textarea",
+          "label": "Descrição sumária da obra: Especifique a natureza da intervenção (ex.: substituição de pavimentos, pintura, instalação de divisórias leves) (máximo 150 palavras)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo23",
+          "type": "text",
+          "label": "Área afetada pela obra (em m²)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo24",
+          "type": "radio",
+          "label": "A obra envolve alteração de elementos estruturais (ex.: paredes mestras, lajes)?",
+          "options": ["Sim", "Não"],
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo25",
+          "type": "textarea",
+          "label": "Justificação técnica: Explique por que a obra não compromete a segurança estrutural, com base em relatório técnico anexo (máximo 100 palavras)",
+          "required": false,
+          "value": null,
+          "condition": {
+            "if": "campo24 == 'Sim'",
+            "show": ["campo25"]
+          }
+        },
+        {
+          "id": "campo26",
+          "type": "text",
+          "label": "Data prevista para início da obra (AAAA-MM-DD)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo27",
+          "type": "text",
+          "label": "Data prevista para conclusão da obra (AAAA-MM-DD)",
+          "required": true,
+          "value": null
+        },
+        {
+          "id": "campo28",
+          "type": "textarea",
+          "label": "Documentos anexos: Liste os documentos submetidos (ex.: caderneta predial, termo de responsabilidade do técnico, planta da obra) (máximo 100 palavras)",
+          "required": true,
+          "value": null
+        }
+      ]
+    }
+  ],
+  "observacoes": "Submeta este formulário através do portal https://informacoeseservicos.lisboa.pt, na secção 'Urbanismo'. A obra pode iniciar 20 dias após submissão, salvo oposição da CML. Anexe caderneta predial e termo de responsabilidade do técnico habilitado (ex.: Ordem dos Engenheiros ou Arquitectos)."
+}

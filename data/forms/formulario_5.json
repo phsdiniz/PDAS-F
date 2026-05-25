@@ -1,0 +1,1116 @@
+{
+    "titulo": "Candidatura a Financiamento de Projeto de Reabilitação Urbana com Impacto Socioeconómico",
+    "descricao": "Formulário para submissão de projetos de reabilitação urbana no âmbito do Programa de Recuperação e Resiliência (PRR) e Portugal 2030, conforme Regulamento (UE) 2021/241 e Decreto-Lei n.º 29-A/2021. Exige conformidade com normativas ambientais, urbanísticas e socioeconómicas.",
+    "secoes": [
+    {
+        "id": "secao1",
+        "titulo": "Identificação do Projeto",
+        "campos": [
+        {
+            "id": "campo1",
+            "type": "text",
+            "label": "Designação do Projeto",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo2",
+            "type": "text",
+            "label": "NIF da Entidade Proponente",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo3",
+            "type": "textarea",
+            "label": "Descrição Executiva do Projeto",
+            "required": true,
+            "value": null,
+            "options": [],
+            "description": "Resumo técnico (mínimo 3000 palavras) com objetivos, impacto e alinhamento com metas do PRR."
+        },
+        {
+            "id": "campo4",
+            "type": "radio",
+            "label": "Tipologia do Projeto",
+            "required": true,
+            "options": ["Reabilitação Residencial", "Reabilitação Comercial", "Espaços Públicos", "Outras"],
+            "value": null
+        },
+        {
+            "id": "campo5",
+            "type": "textarea",
+            "label": "Justificativa para Tipologia 'Outras'",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo4 == 'Outras'",
+            "show": ["campo5"]
+            },
+            "description": "Descrição detalhada (mínimo 1000 palavras) da tipologia alternativa."
+        }
+        ]
+    },
+    {
+        "id": "secao2",
+        "titulo": "Planejamento Financeiro",
+        "campos": [
+        {
+            "id": "campo6",
+            "type": "number",
+            "label": "Orçamento Total Estimado",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo7",
+            "type": "number",
+            "label": "Rubrica Financeira 1: Aquisição de Materiais",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo8",
+            "type": "number",
+            "label": "Rubrica Financeira 2: Mão de Obra Especializada",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo9",
+            "type": "number",
+            "label": "Rubrica Financeira 3: Equipamentos e Máquinas",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo10",
+            "type": "number",
+            "label": "Rubrica Financeira 4: Estudos e Projetos",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo11",
+            "type": "number",
+            "label": "Rubrica Financeira 5: Licenças e Autorizações",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo12",
+            "type": "number",
+            "label": "Rubrica Financeira 6: Consultorias Externas",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo13",
+            "type": "number",
+            "label": "Rubrica Financeira 7: Formação de Equipa",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo14",
+            "type": "number",
+            "label": "Rubrica Financeira 8: Marketing e Divulgação",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo15",
+            "type": "number",
+            "label": "Rubrica Financeira 9: Contingências",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo16",
+            "type": "number",
+            "label": "Rubrica Financeira 10: Seguros",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo17",
+            "type": "number",
+            "label": "Rubrica Financeira 11: Transporte e Logística",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo18",
+            "type": "number",
+            "label": "Rubrica Financeira 12: Energia e Utilidades",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo19",
+            "type": "number",
+            "label": "Rubrica Financeira 13: Manutenção Pós-Obra",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo20",
+            "type": "number",
+            "label": "Rubrica Financeira 14: Avaliações e Auditorias",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo21",
+            "type": "number",
+            "label": "Rubrica Financeira 15: Outros Custos Diversos",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo22",
+            "type": "number",
+            "label": "Cálculo Técnico 3: Custo-Benefício",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo6 > 1000000",
+            "show": ["campo22"]
+            },
+            "description": "Análise de custo-benefício (ROI %)."
+        }
+        ]
+    },
+    {
+        "id": "secao3",
+        "titulo": "Impacto e Sustentabilidade",
+        "campos": [
+        {
+            "id": "campo23",
+            "type": "textarea",
+            "label": "Análise de Impacto Socioeconómico",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo4 == 'Reabilitação Residencial'",
+            "show": ["campo23"]
+            },
+            "description": "Estudo detalhado com métricas de criação de emprego, inclusão social e retorno económico (mínimo 4000 palavras)."
+        },
+        {
+            "id": "campo24",
+            "type": "checkbox",
+            "label": "Indicadores de Sustentabilidade",
+            "required": true,
+            "options": ["Redução de Emissões CO2", "Eficiência Energética", "Acessibilidade Universal", "Outros"],
+            "value": null
+        },
+        {
+            "id": "campo25",
+            "type": "textarea",
+            "label": "Plano de Redução de Emissões",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo25"]
+            },
+            "description": "Plano detalhado com cálculos de emissões evitadas (conforme EN 16247)."
+        },
+        {
+            "id": "campo26",
+            "type": "number",
+            "label": "Área Total Intervenida (m²)",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo27",
+            "type": "textarea",
+            "label": "Plano de Gestão de Resíduos",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo27"]
+            },
+            "description": "Descrição conforme Diretiva 2008/98/CE, incluindo matriz de resíduos e destinos."
+        },
+        {
+            "id": "campo28",
+            "type": "radio",
+            "label": "Nível de Intervenção Urbanística",
+            "required": true,
+            "options": ["Leve", "Moderada", "Profunda"],
+            "value": null
+        },
+        {
+            "id": "campo29",
+            "type": "textarea",
+            "label": "Estudo de Impacto Urbanístico",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo28 == 'Moderada' || campo28 == 'Profunda'",
+            "show": ["campo29"]
+            },
+            "description": "Análise detalhada com cartografia e parecer técnico."
+        },
+        {
+            "id": "campo30",
+            "type": "radio",
+            "label": "Conformidade Ambiental 1: Avaliação de Biodiversidade",
+            "required": true,
+            "options": ["Alta", "Média", "Baixa"],
+            "value": null,
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2' || campo24 includes 'Eficiência Energética'",
+            "show": ["campo30"]
+            }
+        },
+        {
+            "id": "campo31",
+            "type": "number",
+            "label": "Conformidade Ambiental 2: Uso de Água",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo31"]
+            },
+            "description": "Consumo estimado de água (m³)."
+        },
+        {
+            "id": "campo32",
+            "type": "textarea",
+            "label": "Conformidade Ambiental 3: Emissões Poluentes",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo32"]
+            },
+            "description": "Descrição de emissões (500 palavras)."
+        },
+        {
+            "id": "campo33",
+            "type": "radio",
+            "label": "Conformidade Ambiental 4: Certificação Verde",
+            "required": true,
+            "options": ["Sim", "Não"],
+            "value": null,
+            "condition": {
+            "if": "campo24 includes 'Acessibilidade Universal'",
+            "show": ["campo33"]
+            }
+        },
+        {
+            "id": "campo34",
+            "type": "textarea",
+            "label": "Conformidade Ambiental 5: Impacto no Solo",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Outros'",
+            "show": ["campo34"]
+            },
+            "description": "Análise de impacto no solo."
+        },
+        {
+            "id": "campo35",
+            "type": "number",
+            "label": "Conformidade Ambiental 6: Ruído e Vibrações",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo35"]
+            },
+            "description": "Níveis de ruído estimados (dB)."
+        },
+        {
+            "id": "campo36",
+            "type": "textarea",
+            "label": "Conformidade Ambiental 7: Gestão de Floresta Urbana",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo36"]
+            },
+            "description": "Plano de gestão florestal."
+        },
+        {
+            "id": "campo37",
+            "type": "radio",
+            "label": "Conformidade Ambiental 8: Qualidade do Ar",
+            "required": true,
+            "options": ["Melhorada", "Neutro", "Piorada"],
+            "value": null,
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo37"]
+            }
+        },
+        {
+            "id": "campo38",
+            "type": "textarea",
+            "label": "Conformidade Ambiental 9: Ciclo de Vida de Materiais",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo38"]
+            },
+            "description": "Análise LCA de materiais."
+        },
+        {
+            "id": "campo39",
+            "type": "number",
+            "label": "Conformidade Ambiental 10: Proteção de Ecossistemas",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Acessibilidade Universal'",
+            "show": ["campo39"]
+            },
+            "description": "Área protegida (m²)."
+        },
+        {
+            "id": "campo40",
+            "type": "number",
+            "label": "Conformidade Ambiental 11: Energia Renovável Percentual",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo40"]
+            },
+            "description": "Percentagem de energia renovável (%)."
+        },
+        {
+            "id": "campo41",
+            "type": "textarea",
+            "label": "Conformidade Ambiental 12: Mitigação de Inundações",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Outros'",
+            "show": ["campo41"]
+            },
+            "description": "Medidas contra inundações."
+        },
+        {
+            "id": "campo42",
+            "type": "radio",
+            "label": "Conformidade Ambiental 13: Biodiversidade Urbana",
+            "required": true,
+            "options": ["Aumentada", "Mantida", "Reduzida"],
+            "value": null,
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo42"]
+            }
+        },
+        {
+            "id": "campo43",
+            "type": "number",
+            "label": "Conformidade Ambiental 14: Emissões de NOx",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo43"]
+            },
+            "description": "Emissões de NOx estimadas (kg)."
+        },
+        {
+            "id": "campo44",
+            "type": "textarea",
+            "label": "Conformidade Ambiental 15: Sustentabilidade Hídrica",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo44"]
+            },
+            "description": "Plano de sustentabilidade hídrica."
+        },
+        {
+            "id": "campo45",
+            "type": "radio",
+            "label": "Conformidade Ambiental 16: Impacto Visual",
+            "required": true,
+            "options": ["Positivo", "Neutro", "Negativo"],
+            "value": null,
+            "condition": {
+            "if": "campo24 includes 'Acessibilidade Universal'",
+            "show": ["campo45"]
+            }
+        },
+        {
+            "id": "campo46",
+            "type": "textarea",
+            "label": "Conformidade Ambiental 17: Recuperação de Solos Contaminados",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Outros'",
+            "show": ["campo46"]
+            },
+            "description": "Plano de recuperação de solos."
+        },
+        {
+            "id": "campo47",
+            "type": "number",
+            "label": "Conformidade Ambiental 18: Eficiência em Recursos",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo47"]
+            },
+            "description": "Índice de eficiência em recursos."
+        },
+        {
+            "id": "campo48",
+            "type": "textarea",
+            "label": "Conformidade Ambiental 19: Proteção contra Erosão",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo48"]
+            },
+            "description": "Medidas anti-erosão."
+        },
+        {
+            "id": "campo49",
+            "type": "radio",
+            "label": "Conformidade Ambiental 20: Monitorização de Carbono",
+            "required": true,
+            "options": ["Sim", "Não"],
+            "value": null,
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo49"]
+            }
+        }
+        ]
+    },
+    {
+        "id": "secao4",
+        "titulo": "Subprojetos",
+        "campos": [
+        {
+            "id": "campo50",
+            "type": "textarea",
+            "label": "Subprojeto 1: Demolição Inicial",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo28 == 'Profunda'",
+            "show": ["campo50"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) das fases de demolição."
+        },
+        {
+            "id": "campo51",
+            "type": "textarea",
+            "label": "Subprojeto 2: Reforço Estrutural",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo28 == 'Profunda'",
+            "show": ["campo51"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) dos reforços estruturais."
+        },
+        {
+            "id": "campo52",
+            "type": "textarea",
+            "label": "Subprojeto 3: Instalação Elétrica",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo28 == 'Moderada'",
+            "show": ["campo52"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) das instalações elétricas."
+        },
+        {
+            "id": "campo53",
+            "type": "textarea",
+            "label": "Subprojeto 4: Sistemas Hidráulicos",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo28 == 'Moderada'",
+            "show": ["campo53"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) dos sistemas de água e esgotos."
+        },
+        {
+            "id": "campo54",
+            "type": "textarea",
+            "label": "Subprojeto 5: Isolamento Térmico",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo54"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) das medidas de isolamento."
+        },
+        {
+            "id": "campo55",
+            "type": "textarea",
+            "label": "Subprojeto 6: Acabamentos Interiores",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo4 == 'Reabilitação Comercial'",
+            "show": ["campo55"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) dos acabamentos."
+        },
+        {
+            "id": "campo56",
+            "type": "textarea",
+            "label": "Subprojeto 7: Paisagismo Exterior",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo4 == 'Espaços Públicos'",
+            "show": ["campo56"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) do paisagismo."
+        },
+        {
+            "id": "campo57",
+            "type": "textarea",
+            "label": "Subprojeto 8: Acessibilidade para Deficientes",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Acessibilidade Universal'",
+            "show": ["campo57"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) das adaptações."
+        },
+        {
+            "id": "campo58",
+            "type": "textarea",
+            "label": "Subprojeto 9: Sistemas de Segurança",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo28 == 'Profunda'",
+            "show": ["campo58"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) dos sistemas de segurança."
+        },
+        {
+            "id": "campo59",
+            "type": "textarea",
+            "label": "Subprojeto 10: Integração de Energias Renováveis",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo59"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) das fontes renováveis."
+        },
+        {
+            "id": "campo60",
+            "type": "textarea",
+            "label": "Subprojeto 11: Gestão de Águas Pluviais",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo60"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) da gestão de águas."
+        },
+        {
+            "id": "campo61",
+            "type": "textarea",
+            "label": "Subprojeto 12: Restauração Patrimonial",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo4 == 'Reabilitação Residencial'",
+            "show": ["campo61"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) da restauração."
+        },
+        {
+            "id": "campo62",
+            "type": "textarea",
+            "label": "Subprojeto 13: Iluminação Eficiente",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo62"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) da iluminação."
+        },
+        {
+            "id": "campo63",
+            "type": "textarea",
+            "label": "Subprojeto 14: Ventilação e Climatização",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo63"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) dos sistemas HVAC."
+        },
+        {
+            "id": "campo64",
+            "type": "textarea",
+            "label": "Subprojeto 15: Integração Tecnológica",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo64"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) de tecnologias smart."
+        },
+        {
+            "id": "campo65",
+            "type": "textarea",
+            "label": "Subprojeto 16: Espaços Comunitários",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo4 == 'Espaços Públicos'",
+            "show": ["campo65"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) dos espaços."
+        },
+        {
+            "id": "campo66",
+            "type": "textarea",
+            "label": "Subprojeto 17: Medidas Anti-Sísmicas",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo28 == 'Profunda'",
+            "show": ["campo66"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) das medidas."
+        },
+        {
+            "id": "campo67",
+            "type": "textarea",
+            "label": "Subprojeto 18: Reciclagem de Materiais",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo67"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) da reciclagem."
+        },
+        {
+            "id": "campo68",
+            "type": "textarea",
+            "label": "Subprojeto 19: Monitorização Ambiental",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo68"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) da monitorização."
+        },
+        {
+            "id": "campo69",
+            "type": "textarea",
+            "label": "Subprojeto 20: Finalização e Testes",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo28 == 'Profunda'",
+            "show": ["campo69"]
+            },
+            "description": "Descrição detalhada (500–1000 palavras) das fases finais."
+        }
+        ]
+    },
+    {
+        "id": "secao5",
+        "titulo": "Stakeholders e Parcerias",
+        "campos": [
+        {
+            "id": "campo70",
+            "type": "text",
+            "label": "Identificação do Responsável Técnico",
+            "required": true,
+            "value": null,
+            "options": [],
+            "description": "Nome e número de cédula profissional do arquiteto/engenheiro."
+        },
+        {
+            "id": "campo71",
+            "type": "textarea",
+            "label": "Plano de Comunicação e Envolvimento Comunitário",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo4 == 'Espaços Públicos'",
+            "show": ["campo71"]
+            },
+            "description": "Estratégia para consulta pública e disseminação, com KPIs."
+        },
+        {
+            "id": "campo72",
+            "type": "text",
+            "label": "Stakeholder 1: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo73",
+            "type": "textarea",
+            "label": "Stakeholder 1: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo74",
+            "type": "text",
+            "label": "Stakeholder 2: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo75",
+            "type": "textarea",
+            "label": "Stakeholder 2: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo76",
+            "type": "text",
+            "label": "Stakeholder 3: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo77",
+            "type": "textarea",
+            "label": "Stakeholder 3: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo78",
+            "type": "text",
+            "label": "Stakeholder 4: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo79",
+            "type": "textarea",
+            "label": "Stakeholder 4: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo80",
+            "type": "text",
+            "label": "Stakeholder 5: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo81",
+            "type": "textarea",
+            "label": "Stakeholder 5: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo82",
+            "type": "text",
+            "label": "Stakeholder 6: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo83",
+            "type": "textarea",
+            "label": "Stakeholder 6: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo84",
+            "type": "text",
+            "label": "Stakeholder 7: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo85",
+            "type": "textarea",
+            "label": "Stakeholder 7: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo86",
+            "type": "text",
+            "label": "Stakeholder 8: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo87",
+            "type": "textarea",
+            "label": "Stakeholder 8: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo88",
+            "type": "text",
+            "label": "Stakeholder 9: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo89",
+            "type": "textarea",
+            "label": "Stakeholder 9: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo90",
+            "type": "text",
+            "label": "Stakeholder 10: Nome da Entidade Parceira",
+            "required": true,
+            "value": null,
+            "options": []
+        },
+        {
+            "id": "campo91",
+            "type": "textarea",
+            "label": "Stakeholder 10: Descrição do MoU",
+            "required": true,
+            "value": null,
+            "options": []
+        }
+        ]
+    },
+    {
+        "id": "secao6",
+        "titulo": "Certificações",
+        "campos": [
+        {
+            "id": "campo92",
+            "type": "radio",
+            "label": "Certificação LEED: Nível Pretendido",
+            "required": true,
+            "options": ["Certified", "Silver", "Gold", "Platinum"],
+            "value": null,
+            "condition": {
+            "if": "campo30 == 'Alta'",
+            "show": ["campo92"]
+            }
+        },
+        {
+            "id": "campo93",
+            "type": "number",
+            "label": "Certificação LEED: Cálculo de Pontos",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo92 != null",
+            "show": ["campo93"]
+            },
+            "description": "Pontuação estimada para LEED."
+        },
+        {
+            "id": "campo94",
+            "type": "radio",
+            "label": "Certificação BREEAM: Categoria",
+            "required": true,
+            "options": ["Pass", "Good", "Very Good", "Excellent", "Outstanding"],
+            "value": null,
+            "condition": {
+            "if": "campo30 == 'Média'",
+            "show": ["campo94"]
+            }
+        },
+        {
+            "id": "campo95",
+            "type": "textarea",
+            "label": "Certificação BREEAM: Análise Técnica",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo94 != null",
+            "show": ["campo95"]
+            },
+            "description": "Análise técnica para BREEAM (1000 palavras)."
+        },
+        {
+            "id": "campo96",
+            "type": "textarea",
+            "label": "Certificação Outra: Descrição",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo30 == 'Baixa'",
+            "show": ["campo96"]
+            },
+            "description": "Descrição de outra certificação."
+        },
+        {
+            "id": "campo97",
+            "type": "number",
+            "label": "Cálculo Técnico 1: Eficiência Energética",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Eficiência Energética'",
+            "show": ["campo97"]
+            },
+            "description": "Cálculo de eficiência (kWh/m²)."
+        },
+        {
+            "id": "campo98",
+            "type": "number",
+            "label": "Cálculo Técnico 2: Redução de Carbono",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo24 includes 'Redução de Emissões CO2'",
+            "show": ["campo98"]
+            },
+            "description": "Redução estimada (toneladas CO2)."
+        },
+        {
+            "id": "campo99",
+            "type": "textarea",
+            "label": "Certificação: Justificativa",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo92 != null || campo94 != null",
+            "show": ["campo99"]
+            },
+            "description": "Justificativa para escolha de certificação."
+        },
+        {
+            "id": "campo100",
+            "type": "textarea",
+            "label": "Certificação Final: Resumo",
+            "required": true,
+            "value": null,
+            "options": [],
+            "condition": {
+            "if": "campo92 != null || campo94 != null || campo96 != null",
+            "show": ["campo100"]
+            },
+            "description": "Resumo de todas as certificações (2000 palavras)."
+        }
+        ]
+    }
+    ]
+}

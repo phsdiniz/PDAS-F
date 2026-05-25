@@ -1,0 +1,573 @@
+{
+    "titulo": "Formulário Hipotético de Pedido de Autorização para Exploração de Atividade Económica no Âmbito da Administração Pública Portuguesa",
+    "descricao": "Este formulário destina-se ao requerimento de licença para o exercício de atividades económicas reguladas pela legislação portuguesa, nos termos do Decreto-Lei n.º 150/2015, de 5 de agosto, alterado pela Lei n.º 42/2017, de 14 de junho, e conforme as disposições do Regime Jurídico de Acesso e Exercício de Atividades de Comércio, Serviços e Restauração (RJACSR). O preenchimento integral é obrigatório, sob pena de indeferimento liminar, devendo o requerente fornecer descrições pormenorizadas e justificadas, com recurso a terminologia técnica e burocrática adequada, incluindo referências normativas e documentais.",
+    "secoes": [
+        {
+            "id": "secao1",
+            "titulo": "Identificação do Requerente",
+            "campos": [
+                {
+                    "id": "nome_requerente",
+                    "type": "text",
+                    "label": "Denominação completa do requerente, incluindo designação social se aplicável, nos termos do artigo 3.º do Código das Sociedades Comerciais",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "nif_requerente",
+                    "type": "text",
+                    "label": "Número de Identificação Fiscal (NIF) do requerente, conforme exigido pela Autoridade Tributária e Aduaneira (AT)",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "morada_sede",
+                    "type": "text",
+                    "label": "Morada completa da sede social ou domicílio fiscal, incluindo código postal e freguesia, de acordo com o Registo Nacional de Pessoas Coletivas",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao2",
+            "titulo": "Atividade Económica",
+            "campos": [
+                {
+                    "id": "atividade_principal",
+                    "type": "textarea",
+                    "label": "Descrição detalhada da atividade económica principal pretendida, com referência ao Código das Atividades Económicas (CAE) rev. 3, incluindo subclassificações",
+                    "required": true,
+                    "value": null,
+                    "description": "Forneça uma narrativa extensa, justificando a conformidade com o Plano Diretor Municipal (PDM) e normas ambientais."
+                },
+                {
+                    "id": "local_instalacao",
+                    "type": "text",
+                    "label": "Localização exata da instalação, com coordenadas geográficas (latitude e longitude) e referência cadastral predial",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "area_util",
+                    "type": "text",
+                    "label": "Área útil do estabelecimento em metros quadrados, conforme medições certificadas por técnico habilitado",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao3",
+            "titulo": "Licenciamento e Histórico",
+            "campos": [
+                {
+                    "id": "tem_licenca_anterior",
+                    "type": "radio",
+                    "label": "Possui licença anterior para atividade similar? (Sim/Não), nos termos do artigo 12.º do RJACSR",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_licenca_anterior",
+                    "type": "textarea",
+                    "label": "Descreva pormenorizadamente a licença anterior, incluindo número de processo, data de emissão e entidade emissora, com análise comparativa à presente solicitação",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_licenca_anterior == 'Sim'",
+                        "show": ["detalhes_licenca_anterior"]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "secao4",
+            "titulo": "Impacto Ambiental e Sustentabilidade",
+            "campos": [
+                {
+                    "id": "impacto_ambiental",
+                    "type": "textarea",
+                    "label": "Avaliação preliminar de impacto ambiental, incluindo emissões atmosféricas e gestão de resíduos, conforme Diretiva 2011/92/UE transposta pelo Decreto-Lei n.º 151-B/2013",
+                    "required": true,
+                    "value": null,
+                    "description": "Redija uma descrição longa e técnica, com quantificações e referências a normas ISO 14001."
+                },
+                {
+                    "id": "gestao_residuos",
+                    "type": "textarea",
+                    "label": "Plano de gestão de resíduos, conforme Decreto-Lei n.º 178/2006",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "eficiencia_energetica",
+                    "type": "textarea",
+                    "label": "Medidas de eficiência energética, com certificação conforme Diretiva 2012/27/UE",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "sustentabilidade_ambiental",
+                    "type": "textarea",
+                    "label": "Compromissos de sustentabilidade ambiental adicionais",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao5",
+            "titulo": "Recursos Humanos e Segurança",
+            "campos": [
+                {
+                    "id": "numero_funcionarios",
+                    "type": "text",
+                    "label": "Número previsto de trabalhadores afetos à atividade, discriminados por categoria profissional",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "formacao_funcionarios",
+                    "type": "textarea",
+                    "label": "Plano de formação inicial e contínua dos funcionários, com detalhe curricular e certificações exigidas pelo Código do Trabalho",
+                    "required": true,
+                    "value": null,
+                    "description": "Forneça narrativa descritiva extensa, incluindo cronogramas e orçamentos."
+                },
+                {
+                    "id": "medidas_seguranca",
+                    "type": "textarea",
+                    "label": "Medidas de segurança e higiene no trabalho implementadas, conforme Regulamento (CE) n.º 852/2004 e Decreto-Lei n.º 50/2005",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao6",
+            "titulo": "Parcerias e Contratos Públicos",
+            "campos": [
+                {
+                    "id": "tem_parceria",
+                    "type": "radio",
+                    "label": "Existência de parcerias ou subcontratações? (Sim/Não)",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_parceria",
+                    "type": "textarea",
+                    "label": "Descrição burocrática das parcerias, incluindo contratos celebrados e responsabilidades partilhadas, nos termos do Código Civil",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_parceria == 'Sim'",
+                        "show": ["detalhes_parceria"]
+                    }
+                },
+                {
+                    "id": "tem_contratos_publicos",
+                    "type": "radio",
+                    "label": "Participação em contratos públicos? (Sim/Não)",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_contratos_publicos",
+                    "type": "textarea",
+                    "label": "Histórico de concursos públicos, com referências ao Código dos Contratos Públicos",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_contratos_publicos == 'Sim'",
+                        "show": ["detalhes_contratos_publicos"]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "secao7",
+            "titulo": "Situação Financeira",
+            "campos": [
+                {
+                    "id": "capital_social",
+                    "type": "text",
+                    "label": "Capital social da entidade requerente, em euros, com comprovativo de depósito bancário",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "previsao_faturacao",
+                    "type": "textarea",
+                    "label": "Previsão de faturação anual, discriminada por rubricas fiscais",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "tem_subsidios",
+                    "type": "radio",
+                    "label": "Solicitação de subsídios ou incentivos fiscais? (Sim/Não), conforme Portugal 2020 ou sucessores",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_subsidios",
+                    "type": "textarea",
+                    "label": "Justificativa detalhada para subsídios, com análise de elegibilidade e impacto orçamental",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_subsidios == 'Sim'",
+                        "show": ["detalhes_subsidios"]
+                    }
+                },
+                {
+                    "id": "risco_financeiro",
+                    "type": "textarea",
+                    "label": "Análise de riscos financeiros, incluindo cenários de contingência conforme normas contabilísticas SNC",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao8",
+            "titulo": "Certificações e Compliance",
+            "campos": [
+                {
+                    "id": "certificacoes",
+                    "type": "textarea",
+                    "label": "Certificações obtidas ou em processo, como ISO 9001 ou HACCP",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "tem_litigios",
+                    "type": "radio",
+                    "label": "Existência de litígios pendentes? (Sim/Não)",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_litigios",
+                    "type": "textarea",
+                    "label": "Descrição pormenorizada dos litígios, com números de processo e tribunais competentes",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_litigios == 'Sim'",
+                        "show": ["detalhes_litigios"]
+                    }
+                },
+                {
+                    "id": "tem_auditorias",
+                    "type": "radio",
+                    "label": "Submissão a auditorias externas? (Sim/Não)",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_auditorias",
+                    "type": "textarea",
+                    "label": "Relatórios de auditorias anteriores, com correções implementadas",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_auditorias == 'Sim'",
+                        "show": ["detalhes_auditorias"]
+                    }
+                },
+                {
+                    "id": "tem_certificado_etica",
+                    "type": "radio",
+                    "label": "Certificado de conformidade ética? (Sim/Não)",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_certificado_etica",
+                    "type": "textarea",
+                    "label": "Descrição do certificado, com entidade emissora",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_certificado_etica == 'Sim'",
+                        "show": ["detalhes_certificado_etica"]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "secao9",
+            "titulo": "Plano de Negócios",
+            "campos": [
+                {
+                    "id": "plano_negocios_1",
+                    "type": "textarea",
+                    "label": "Secção 1 do Plano de Negócios: Visão geral estratégica, com matriz SWOT",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "plano_negocios_2",
+                    "type": "textarea",
+                    "label": "Secção 2 do Plano de Negócios: Análise de mercado, incluindo segmentação e posicionamento",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "plano_negocios_3",
+                    "type": "textarea",
+                    "label": "Secção 3 do Plano de Negócios: Estrutura organizacional e recursos humanos",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "plano_negocios_4",
+                    "type": "textarea",
+                    "label": "Secção 4 do Plano de Negócios: Projeções financeiras detalhadas",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "plano_negocios_5",
+                    "type": "textarea",
+                    "label": "Secção 5 do Plano de Negócios: Estratégias de marketing e vendas",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "plano_negocios_6",
+                    "type": "textarea",
+                    "label": "Secção 6 do Plano de Negócios: Gestão de riscos e compliance",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "plano_negocios_7",
+                    "type": "textarea",
+                    "label": "Secção 7 do Plano de Negócios: Sustentabilidade e responsabilidade social",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "plano_negocios_8",
+                    "type": "textarea",
+                    "label": "Secção 8 do Plano de Negócios: Anexos e documentação suplementar",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao10",
+            "titulo": "Inovação e Propriedade Intelectual",
+            "campos": [
+                {
+                    "id": "medidas_inovacao",
+                    "type": "textarea",
+                    "label": "Medidas de inovação tecnológica implementadas, conforme Estratégia Nacional de Investigação e Inovação",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "tem_patentes",
+                    "type": "radio",
+                    "label": "Possui patentes ou direitos de propriedade intelectual? (Sim/Não)",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_patentes",
+                    "type": "textarea",
+                    "label": "Descrição das patentes, com números de registo no INPI",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_patentes == 'Sim'",
+                        "show": ["detalhes_patentes"]
+                    }
+                },
+                {
+                    "id": "tem_exportacao",
+                    "type": "radio",
+                    "label": "Pretende exportação de bens/serviços? (Sim/Não)",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_exportacao",
+                    "type": "textarea",
+                    "label": "Plano de internacionalização, com análise de mercados-alvo e conformidade com regulamentos UE",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_exportacao == 'Sim'",
+                        "show": ["detalhes_exportacao"]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "secao11",
+            "titulo": "Impacto Social e Relações",
+            "campos": [
+                {
+                    "id": "impacto_social",
+                    "type": "textarea",
+                    "label": "Impacto social da atividade, incluindo criação de emprego e inclusão",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "relacao_fornecedores",
+                    "type": "textarea",
+                    "label": "Relação com fornecedores, incluindo critérios de seleção ética",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "tem_colaboracoes",
+                    "type": "radio",
+                    "label": "Colaborações com entidades académicas? (Sim/Não)",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_colaboracoes",
+                    "type": "textarea",
+                    "label": "Descrição das colaborações, com protocolos assinados",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_colaboracoes == 'Sim'",
+                        "show": ["detalhes_colaboracoes"]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "secao12",
+            "titulo": "Gestão Operacional e Sistemas",
+            "campos": [
+                {
+                    "id": "plano_contingencia",
+                    "type": "textarea",
+                    "label": "Plano de contingência para interrupções operacionais",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "integracao_sistemas",
+                    "type": "textarea",
+                    "label": "Integração com sistemas informáticos públicos, como SCAP",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "tem_dados_pessoais",
+                    "type": "radio",
+                    "label": "Tratamento de dados pessoais? (Sim/Não), conforme RGPD",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_dados_pessoais",
+                    "type": "textarea",
+                    "label": "Política de privacidade e consentimentos, com análise de impacto",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_dados_pessoais == 'Sim'",
+                        "show": ["detalhes_dados_pessoais"]
+                    }
+                },
+                {
+                    "id": "acessibilidade",
+                    "type": "textarea",
+                    "label": "Medidas de acessibilidade para pessoas com deficiência, conforme Decreto-Lei n.º 125/2017",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        },
+        {
+            "id": "secao13",
+            "titulo": "Indicadores e Relatórios",
+            "campos": [
+                {
+                    "id": "indicadores_desempenho",
+                    "type": "textarea",
+                    "label": "Indicadores chave de desempenho (KPIs) previstos",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "relatorio_anual",
+                    "type": "textarea",
+                    "label": "Estrutura proposta para relatório anual de atividades",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "tem_expansao",
+                    "type": "radio",
+                    "label": "Planos de expansão futura? (Sim/Não)",
+                    "required": true,
+                    "options": ["Sim", "Não"],
+                    "value": null
+                },
+                {
+                    "id": "detalhes_expansao",
+                    "type": "textarea",
+                    "label": "Cronograma e financiamento para expansão",
+                    "required": false,
+                    "value": null,
+                    "condition": {
+                        "if": "tem_expansao == 'Sim'",
+                        "show": ["detalhes_expansao"]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "secao14",
+            "titulo": "Declarações Finais",
+            "campos": [
+                {
+                    "id": "conformidade_fiscal",
+                    "type": "textarea",
+                    "label": "Declaração de conformidade fiscal integral",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "data_submissao",
+                    "type": "date",
+                    "label": "Data de submissão do requerimento",
+                    "required": true,
+                    "value": null
+                },
+                {
+                    "id": "assinatura_digital",
+                    "type": "text",
+                    "label": "Assinatura digital do responsável, conforme Certificado Digital Qualificado",
+                    "required": true,
+                    "value": null
+                }
+            ]
+        }
+    ]
+}

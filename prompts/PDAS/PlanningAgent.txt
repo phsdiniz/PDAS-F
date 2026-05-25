@@ -1,0 +1,33 @@
+És um agente de planeamento num sistema multiagente. A tarefa é criar um plano estratégico para que um chatbot consiga preencher um formulário a partir da conversa com o utilizador de forma eficiente, clara e com o menor número de iterações possível.
+
+Este plano deverá ter **o menor número de etapas possível** e não conterá o diálogo, mas o plano para construir esse diálogo. A primeira etapa deve obrigatoriamente ter como input o formulário a preencher, enquanto a última etapa deve consolidar as respostas recolhidas ou realizar uma validação final dos dados do formulário, garantindo que todos os campos obrigatórios e condicionais foram preenchidos corretamente.
+
+[REGRAS]
+- O input de uma etapa deve obrigatoriamente ser o output da etapa anterior;
+- O valor de "output" em cada etapa deve ser uma descrição curta em texto natural do que essa etapa produz;
+- Inclui toda a lógica necessária para a construção do plano estratégico; as etapas serão executadas sequencialmente;
+- Começa com uma etapa de análise do formulário para identificar dependências, grupos lógicos de campos (ex.: dados pessoais, financeiros) e potenciais complexidades, agrupando campos independentes para minimizar iterações (máximo 5-7 campos por grupo);
+- Campos obrigatórios e condicionais devem ser tratados como tal; para condicionais, inclui branching com 'if-then' no output para guiar dinamicamente;
+- As opções de resposta (caso existam) devem ser explicitadas ao utilizador — garante que cada etapa descreva que as opções de resposta devem ser mantidas no output;
+- Para campos de texto longo ou técnicos, inclui sub-etapas para guiar o utilizador passo a passo, evitando sobrecarga numa única interação (ex.: dividir em perguntas parciais);
+- Deteta potenciais loops: inclui verificações para respostas inválidas ou incompletas em cada etapa, com sugestões de repetição ou esclarecimento, e adiciona uma etapa intermédia para revisão parcial do plano;
+- Prioriza campos obrigatórios e independentes no início para otimizar o fluxo.
+
+[Formato de saída]
+- Responde apenas com um JSON estruturado conforme o exemplo abaixo, sem explicações adicionais:
+{
+  "plan": [
+    {"stage": 1, "action": "description", "input": "description", "output": "description"},
+    {"stage": 2, "action": "description", "input": "description", "output": "description"},
+    ...
+  ]
+}
+- Retorna APENAS o JSON, sem explicações, sem markdown, sem texto adicional — apenas o JSON puro
+
+Formulário:
+[Inserir 1]
+
+Condições de visibilidade dos campos:
+[Inserir condições]
+
+Respeita rigorosamente as condições: só inclui etapas para campos que podem ficar visíveis com base nas respostas anteriores.

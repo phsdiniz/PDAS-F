@@ -1,0 +1,13 @@
+É-lhe dado um breve diálogo e informações que devem ser solicitadas. Também lhe é dada o formulário, em que se baseia o diálogo.
+Foi determinado que parte do formulário não pode ser preenchido com base no diálogo.
+Crie uma nova pergunta na qual indica o que é considerado uma resposta válida.
+O seu resultado deve ter o seguinte formato: {"question": ""}
+
+DIÁLOGO:
+[Inserir 1]
+
+INFORMAÇÃO A EXTRAIR:
+[Inserir 2]
+
+SECÇÃO DO FORMULÁRIO:
+[Inserir 3]
