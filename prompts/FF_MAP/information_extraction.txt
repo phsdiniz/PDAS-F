@@ -1,7 +1,0 @@
-É-lhe dado um pequeno DIÁLOGO. Extraia informações como factos sobre o tópico discutido no DIÁLOGO dado.
-A informação tem de ser armazenada como chave, pares de valores de cadeias de texto e nenhuma outra forma de estrutura de dados.
-O seu resultado deve ter o seguinte formato: {"key": "value", ...} por exemplo, um resultado aceitável seria
-{"dia da semana": "segunda-feira", "carro": "corvette"}
-
-DIÁLOGO:
-[Inserir]

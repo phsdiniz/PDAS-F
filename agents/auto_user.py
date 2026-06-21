@@ -1,9 +1,9 @@
 """
 agents/auto_user.py — AutoUserAgent
 
-Simula o utilizador humano para runs automáticas (auto_user=True).
-Gera uma resposta plausível à última mensagem do chatbot,
-com base no perfil de utilizador carregado de auto_users.txt.
+Simulates the human user for automatic runs (auto_user=True).
+Generates a plausible reply to the chatbot's last message, based on the
+user profile loaded from auto_users.txt.
 """
 
 from __future__ import annotations
@@ -15,11 +15,12 @@ from config import RunConfig, DATA_DIR
 
 def load_random_user_profile(seed: int | None = None) -> str:
     """
-    Carrega um perfil aleatório de data/auto_users.txt.
+    Loads a random profile from data/auto_users.txt.
 
     Args:
-        seed: Se fornecido, a escolha é determinística — útil para reproduzir
-              experiências em condições controladas. Se None, escolha aleatória.
+        seed: If provided, the choice is deterministic — useful for
+              reproducing experiments under controlled conditions.
+              If None, the choice is random.
     """
     path  = DATA_DIR / "auto_users.txt"
     lines = [l.strip() for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
@@ -35,12 +36,12 @@ def call_auto_user_agent(
     run_cfg: RunConfig,
 ) -> AgentResult:
     """
-    Gera a próxima mensagem do utilizador simulado.
+    Generates the simulated user's next message.
 
     Args:
-        user_profile:      Descrição textual do perfil (ex: "Maria, 72 anos, Lisboa...").
-        last_bot_message:  Última mensagem do chatbot.
-        run_cfg:           Configuração da run (para resolver o modelo).
+        user_profile:      Textual profile description (e.g. "Maria, 72 anos, Lisboa...").
+        last_bot_message:  Chatbot's last message.
+        run_cfg:           Run configuration (used to resolve the model).
     """
     prompt = (
         f"Contexto: \"{user_profile}\"\n"

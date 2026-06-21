@@ -1,8 +1,8 @@
 """
 agents/interface.py — InterfaceAgent
 
-Adapta uma instrução técnica ao estilo de linguagem do utilizador,
-gerando a mensagem final exibida no chatbot.
+Adapts a technical instruction to the user's language style,
+generating the final message displayed in the chatbot.
 """
 
 from __future__ import annotations
@@ -21,10 +21,10 @@ def call_interface_agent(
 ) -> AgentResult:
     """
     Args:
-        context:          Histórico de mensagens.
-        instruction:      Mensagem técnica a adaptar (ex: output do SingleTaskAgent).
-        run_cfg:          Configuração da run.
-        use_full_context: Se True, envia todo o histórico; se False, apenas a última mensagem.
+        context:          Message history.
+        instruction:      Technical message to adapt (e.g. the SingleTaskAgent's output).
+        run_cfg:          Run configuration.
+        use_full_context: If True, sends the full history; if False, only the last message.
     """
     if use_full_context:
         context_text = "\n".join(f"{m['who']}: {m['message']}" for m in context)

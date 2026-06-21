@@ -1,8 +1,8 @@
 """
-agents/base.py — Chamada genérica ao OpenAI com resolução automática de modelo.
+agents/base.py — Generic OpenAI call with automatic model resolution.
 
-Todos os agentes específicos importam `call_llm` daqui.
-Nunca instanciam o cliente OpenAI diretamente.
+All specific agents import `call_llm` from here.
+They never instantiate the OpenAI client directly.
 """
 
 from __future__ import annotations
@@ -13,38 +13,38 @@ import os
 
 import openai
 
-from config import RunConfig, PROMPTS_DIR, PROMPTS_FF_MAP, PROMPTS_PDAS
+from config import RunConfig, PROMPTS_DIR
 
 import tiktoken
 enc = tiktoken.get_encoding("cl100k_base")
 
 
 # ---------------------------------------------------------------------------
-# Clientes (singletons — inicializados uma vez)
+# Clients (singletons — initialized once)
 # ---------------------------------------------------------------------------
 def _get_openai_client() -> openai.OpenAI:
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        # AVISO DE SEGURANÇA: api_secrets.py é um fallback de desenvolvimento local.
-        # NUNCA faças commit deste ficheiro — adiciona-o ao .gitignore.
-        # Em produção/CI usa sempre a variável de ambiente OPENAI_API_KEY.
+        # SECURITY WARNING: api_secrets.py is a local-development fallback.
+        # NEVER commit this file — add it to .gitignore.
+        # In production/CI always use the OPENAI_API_KEY environment variable.
         try:
             from api_secrets import api_key as _key  # type: ignore
             api_key = _key
         except ImportError:
             raise EnvironmentError(
-                "OPENAI_API_KEY não definida. "
-                "Define a variável de ambiente ou cria api_secrets.py com api_key='...' "
-                "(NUNCA faças commit desse ficheiro)."
+                "OPENAI_API_KEY is not defined."
+                "Set the environment variable or create api_secrets.py with api_key=‘...’ "
+                "(NEVER commit this file)."
             )
     return openai.OpenAI(api_key=api_key)
 
 '''
 def _get_ollama_client() -> openai.OpenAI:
     """
-    Ollama expõe uma API compatível com OpenAI em localhost:11434.
-    Requer: ollama serve (correr em background antes de usar).
-    Instalar: https://ollama.com  →  ollama pull llama3.1:8b
+    Ollama exposes an OpenAI-compatible API at localhost:11434.
+    Requires: ollama serve (run in the background before use).
+    Install: https://ollama.com  →  ollama pull llama3.1:8b
     """
     return openai.OpenAI(
         base_url="http://localhost:11434/v1",
@@ -59,7 +59,7 @@ _hf_client:     openai.OpenAI | None = None
 
 
 def get_client(model: str) -> openai.OpenAI:
-    """Devolve o cliente correto com base no prefixo do modelo."""
+    """Returns the right client based on the model's prefix."""
     global _openai_client, _ollama_client, _hf_client
 
     if model.startswith("ollama/"):
@@ -88,10 +88,10 @@ def get_client(model: str) -> openai.OpenAI:
 
 
 # ---------------------------------------------------------------------------
-# Tipos de retorno
+# Return types
 # ---------------------------------------------------------------------------
 class AgentResult:
-    """Resultado de uma chamada a um agente."""
+    """Result of a call to an agent."""
     __slots__ = ("content", "input_tokens", "output_tokens", "tiktoken_input", "tiktoken_output")
 
     def __init__(self, content: str, input_tokens: int, output_tokens: int,
@@ -113,7 +113,7 @@ class AgentResult:
 
 
 # ---------------------------------------------------------------------------
-# Chamada base
+# Base call
 # ---------------------------------------------------------------------------
 def call_llm(
     prompt: str,
@@ -121,15 +121,15 @@ def call_llm(
     system: str | None = None,
 ) -> AgentResult:
     """
-    Chama o modelo e devolve um AgentResult.
-    Suporta modelos OpenAI (cloud) e Ollama (local, prefixo "ollama/").
+    Calls the model and returns an AgentResult.
+    Supports OpenAI (cloud) and Ollama (local, "ollama/" prefix) models.
 
     Args:
-        prompt: Conteúdo da mensagem do utilizador.
-        model:  Nome do modelo. Exemplos:
+        prompt: User message content.
+        model:  Model name. Examples:
                   "gpt-4o"               → OpenAI cloud
                   "ollama/llama3.1:8b"   → Ollama local
-        system: System prompt opcional.
+        system: Optional system prompt.
     """
     client     = get_client(model)
     model_name = (
@@ -166,30 +166,21 @@ def call_llm(
 
 
 # ---------------------------------------------------------------------------
-# Carregamento de prompts
+# Prompt loading
 # ---------------------------------------------------------------------------
 def load_prompt(filename: str) -> str:
     """
-    Carrega um ficheiro de prompt.
-
-    Resolução de caminhos (por ordem de prioridade):
-      1. Se filename começa com "FF_MAP/" → PROMPTS_FF_MAP
-      2. Se filename começa com "PDAS/"   → PROMPTS_PDAS
-      3. Caso contrário                   → PROMPTS_DIR (prompts partilhados)
+    Loads a prompt file from prompts/ (flat directory — every agent prompt
+    lives there directly, regardless of architecture).
     """
-    if filename.startswith("FF_MAP/"):
-        path = PROMPTS_FF_MAP / filename[len("FF_MAP/"):]
-    elif filename.startswith("PDAS/"):
-        path = PROMPTS_PDAS / filename[len("PDAS/"):]
-    else:
-        path = PROMPTS_DIR / filename
+    path = PROMPTS_DIR / filename
     if not path.exists():
         raise FileNotFoundError(f"Prompt não encontrado: {path}")
     return path.read_text(encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------
-# Agente genérico com substituição de placeholders
+# Generic agent call with placeholder substitution
 # ---------------------------------------------------------------------------
 def run_agent(
     prompt_file: str,
@@ -198,14 +189,14 @@ def run_agent(
     agent_name: str,
 ) -> AgentResult:
     """
-    Carrega o prompt, substitui os placeholders e chama o modelo correto
-    para este agente/arquitectura (resolvido via RunConfig).
+    Loads the prompt, substitutes the placeholders, and calls the right
+    model for this agent/architecture (resolved via RunConfig).
 
     Args:
-        prompt_file:  Nome do ficheiro em prompts/ (ex: "IntentAgent.txt").
-        replacements: Mapeamento de placeholders → valores.
-        run_cfg:      Configuração da run atual.
-        agent_name:   Nome do agente (usado para resolver o modelo via config).
+        prompt_file:  File name in prompts/ (e.g. "PlanningAgent.txt").
+        replacements: Mapping of placeholders → values.
+        run_cfg:      Current run configuration.
+        agent_name:   Agent name (used to resolve the model via config).
     """
     prompt = load_prompt(prompt_file)
     for key, value in replacements.items():
@@ -218,10 +209,10 @@ def run_agent(
 
 
 # ---------------------------------------------------------------------------
-# Contagem de tokens normalizada
+# Normalized token counting
 # ---------------------------------------------------------------------------
 def _tok(result: AgentResult) -> dict:
-    """Delta nativo da API (custo real)."""
+    """Native API delta (actual cost)."""
     return {
         "total_input_tokens": result.input_tokens,
         "total_output_tokens": result.output_tokens,
@@ -229,7 +220,7 @@ def _tok(result: AgentResult) -> dict:
 
 
 def _tok_multi(*results: AgentResult) -> dict:
-    """Soma deltas de múltiplas chamadas."""
+    """Sums deltas across multiple calls."""
     in_total = sum(r.input_tokens for r in results)
     out_total = sum(r.output_tokens for r in results)
     return {
@@ -239,7 +230,7 @@ def _tok_multi(*results: AgentResult) -> dict:
 
 
 def _tiktoken_approx(prompt: str, output: str) -> dict:
-    """Contagem normalizada usando tokenizer cl100k_base (GPT-4o style)."""
+    """Normalized count using the cl100k_base tokenizer (GPT-4o style)."""
     enc = tiktoken.get_encoding("cl100k_base")
     return {
         "tiktoken_input": len(enc.encode(prompt)),

@@ -1,18 +1,27 @@
 """
-graphs/state.py — Estado partilhado entre todos os grafos LangGraph.
+graphs/state.py — State shared across all LangGraph graphs.
 
-O LangGraph passa este estado entre nós. Cada nó devolve um dict parcial
-com apenas os campos que alterou — o grafo faz o merge automaticamente.
+LangGraph passes this state between nodes. Each node returns a partial
+dict with only the fields it changed — the graph merges it automatically.
 
-NOTA SOBRE CONTADORES DE TOKENS:
-  total_input_tokens e total_output_tokens usam Annotated[int, operator.add]
-  como reducer. Isto significa que os nós devem devolver APENAS o delta
-  (tokens desta chamada), não o total acumulado. O LangGraph soma
-  automaticamente. Exemplo correto num nó:
+CORRESPONDENCE WITH THE ARCHITECTURE DESCRIPTION (PDAS / PDAS_F):
+  The three components of the session state are:
+    (i)   conversation context   → "context"
+    (ii)  form answer store      → "form_answers"
+    (iii) execution pointer      → "current_stage_index"
+  For PDAS_F, two additional fields persist across sessions:
+    "feedback"      → serialized output of the Evaluation Agent
+    "previous_plan" → serialized plan from the previous run
+
+NOTE ON TOKEN COUNTERS:
+  total_input_tokens and total_output_tokens use Annotated[int, operator.add]
+  as their reducer. This means nodes must return ONLY the delta (tokens
+  for this call), not the accumulated total. LangGraph sums them
+  automatically. Correct example in a node:
 
       return {
-          "total_input_tokens":  result.input_tokens,   # delta, não total
-          "total_output_tokens": result.output_tokens,  # delta, não total
+          "total_input_tokens":  result.input_tokens,   # delta, not total
+          "total_output_tokens": result.output_tokens,  # delta, not total
       }
 """
 
@@ -23,73 +32,74 @@ import operator
 
 
 # ---------------------------------------------------------------------------
-# Estado principal da run
+# Main run state
 # ---------------------------------------------------------------------------
 class FormFillingState(TypedDict, total=False):
-    # --- Contexto da conversa ---
+    # --- Conversation context ---
     context: list[dict]          # [{"who": "CHATBOT"|"CITIZEN", "message": "..."}]
 
-    # --- Formulário ---
+    # --- Form ---
     form: dict
     form_name: str
-    form_answers: dict           # {stage_id: resposta_texto} — respostas brutas
-    filled_form: dict            # formulário JSON com "value" preenchidos
+    form_answers: dict           # {stage_id: raw_answer_text}
+    filled_form: dict            # form JSON with "value" fields filled in
 
-    # --- Intenção ---
-    intent: str | None           # "1"…"5" ou "UNDEFINED" ou None
+    # --- Form identification ---
+    # Identifies which form the user wants to fill in. This is the
+    # Planning Agent's first invocation of a session (there is no separate
+    # Intent Agent — see agents.PDAS.call_planning_agent_identify_form).
+    form_id: str | None          # "1"…"5" or "UNDEFINED" or None
 
-    # --- Plano (planning-centric) ---
+    # --- Plan (planning-centric) ---
     plan: list[dict]
     plan_str: str
     current_stage_index: int
     single_task_output: str
 
-    # --- Feedback inter-runs (PDAS_F) ---
+    # --- Inter-run feedback (PDAS_F) ---
     feedback: str
     previous_plan: str
 
-    # --- Contadores e flags ---
-    intent_attempts: int
+    # --- Counters and flags ---
+    form_id_attempts: int
     validation_attempts: int
     iteration_count: int
 
-    # --- Vanilla LLM ---
-    vanilla_status: str          # "in_progress" ou "complete"
+    # --- Task Agent output validation (Validation Agent's dual invocation) ---
+    # Counts replanning attempts for the current stage after a
+    # NOT_VALIDATED on the SingleTaskAgent's output. Reset to 0 whenever
+    # the run advances to a new stage (see node_store_answer).
+    output_validation_attempts: int
 
-    # --- FF_MAP ---
-    questions: list[str]
-    fields: list[str]
-    current_field_index: int
-    extracted_info: list
-    current_dialogue: str
-    parse_action: str            # "information_extraction" | "follow_up_question" | "repeat_question"
-    filled_form_text: str
-
-    # --- Resultados finais ---
+    # --- Final results ---
     hit_rate:           float
     report:             dict
-    score:              str
     advanced_metrics:   dict
 
     # --- Logging ---
-    # Acumulador de IO dos agentes (append-only)
+    # Append-only accumulator of agent IO
     agent_io_log: Annotated[list[dict], operator.add]
 
-    # Erros acumulados
+    # Accumulated errors
     errors: Annotated[list[str], operator.add]
 
-    # Contagem de tokens
+    # Explicit failure states (escalated for manual resolution), recorded
+    # when a validation/replanning loop exceeds the maximum number of
+    # attempts configured in RunConfig.
+    escalations: Annotated[list[dict], operator.add]
+
+    # Token counts
     total_input_tokens:     Annotated[int, operator.add]
     total_output_tokens:    Annotated[int, operator.add]
     total_tiktoken_input:   Annotated[int, operator.add]
     total_tiktoken_output:  Annotated[int, operator.add]
 
-    # --- Perfil do utilizador simulado ---
+    # --- Simulated user profile ---
     user_profile: str | None
 
 
 # ---------------------------------------------------------------------------
-# Estado inicial vazio
+# Empty initial state
 # ---------------------------------------------------------------------------
 def initial_state() -> FormFillingState:
     return FormFillingState(
@@ -98,30 +108,23 @@ def initial_state() -> FormFillingState:
         form_name            = "",
         form_answers         = {},
         filled_form          = {},
-        intent               = None,
+        form_id              = None,
         plan                 = [],
         plan_str             = "",
         current_stage_index  = 0,
         single_task_output   = "",
         feedback             = "",
         previous_plan        = "",
-        intent_attempts      = 0,
+        form_id_attempts     = 0,
         validation_attempts  = 0,
         iteration_count      = 0,
-        vanilla_status       = "in_progress",
-        questions            = [],
-        fields               = [],
-        current_field_index  = 0,
-        extracted_info       = [],
-        current_dialogue     = "",
-        parse_action         = "",
-        filled_form_text     = "",
+        output_validation_attempts = 0,
         hit_rate             = 0.0,
         report               = {},
-        score                = "",
         advanced_metrics     = {},
         agent_io_log         = [],
         errors               = [],
+        escalations          = [],
         total_input_tokens   = 0,
         total_output_tokens  = 0,
         user_profile         = None,

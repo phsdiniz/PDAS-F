@@ -1,8 +1,8 @@
 """
-utils/logging.py — Logging estruturado e métricas de execução.
+utils/logging.py — Structured logging and run metrics.
 
-Centraliza toda a escrita em ficheiros de log para que os módulos
-de arquitectura não precisem de saber onde nem como escrever.
+Centralizes all writing to log files so that the architecture modules
+don't need to know where or how to write.
 """
 
 from __future__ import annotations
@@ -16,23 +16,16 @@ from config import Colors, Architecture
 
 
 # ---------------------------------------------------------------------------
-# Ficheiros de log por arquitectura
-# Os logs comuns a todas as arquitecturas são sempre abertos.
-# Os específicos só são abertos para a arquitectura relevante.
+# Per-architecture log files
+# The logs common to every architecture are always opened.
+# Architecture-specific ones are only opened for the relevant architecture.
 # ---------------------------------------------------------------------------
 _COMMON_LOG_FILES = [
     "geral", "chat", "metricas",
-    "intent_agent", "interface_agent", "validation_agent",
-    "output_generator_agent", "score_agent",
+    "interface_agent", "validation_agent",
 ]
 
 _ARCH_LOG_FILES: dict[str, list[str]] = {
-    Architecture.VANILLA.value: ["vanilla_agent"],
-    Architecture.FF_MAP.value: [
-        "question_generation_agent", "answer_parsing_agent",
-        "information_extraction_agent", "follow_up_question_agent",
-        "repeat_question_agent", "form_filling_agent", "json_generation_agent",
-    ],
     Architecture.PDAS.value: [
         "planning_agent", "single_task_agent",
     ],
@@ -43,7 +36,7 @@ _ARCH_LOG_FILES: dict[str, list[str]] = {
 
 
 # ---------------------------------------------------------------------------
-# Estrutura de métricas
+# Metrics structure
 # ---------------------------------------------------------------------------
 @dataclass
 class Metrics:
@@ -72,7 +65,7 @@ class Metrics:
 
 
 # ---------------------------------------------------------------------------
-# Estado de uma run
+# State of a single run
 # ---------------------------------------------------------------------------
 @dataclass
 class RunLog:
@@ -83,7 +76,7 @@ class RunLog:
     auto_user_model:      str | None = None
     advanced_metrics:     dict = field(default_factory=dict)
     user_profile:         str | None = None
-    intent_detectado:     str | None = None
+    form_id_detectado:    str | None = None
     plano_inicial:        list | None = None
     respostas_parciais:   list        = field(default_factory=list)
     respostas_formulario: dict        = field(default_factory=dict)
@@ -101,7 +94,7 @@ class RunLog:
     def to_dict(self) -> dict:
         return {
             "user_profile":          self.user_profile,
-            "intent_detectado":      self.intent_detectado,
+            "form_id_detectado":     self.form_id_detectado,
             "plano_inicial":         self.plano_inicial,
             "respostas_parciais":    self.respostas_parciais,
             "respostas_formulario":  self.respostas_formulario,
@@ -120,12 +113,12 @@ class RunLog:
 
 
 # ---------------------------------------------------------------------------
-# Gestor de ficheiros de log para uma run
+# Log file manager for a run
 # ---------------------------------------------------------------------------
 class LogFileManager:
     """
-    Abre apenas os ficheiros de log relevantes para a arquitectura em uso.
-    Usa ExitStack para garantir que tudo é fechado mesmo em caso de erro.
+    Opens only the log files relevant to the architecture in use.
+    Uses ExitStack to guarantee everything is closed even on error.
     """
     def __init__(self, run_dir: Path, stack: ExitStack, architecture: str | None = None):
         self._files: dict[str, TextIO] = {}
@@ -147,7 +140,7 @@ class LogFileManager:
             self._files[name] = self._stack.enter_context(open(path, "w", encoding="utf-8"))
 
     def write(self, name: str, content: str) -> None:
-        """Escreve em ficheiro de log; ignora silenciosamente se não existir."""
+        """Writes to a log file; silently ignores it if it doesn't exist."""
         f = self._files.get(name)
         if f:
             f.write(content)
@@ -155,8 +148,8 @@ class LogFileManager:
 
     def record(self, agent_name: str, input_data: Any, output_data: str, run_log: RunLog | None = None) -> None:
         """
-        Regista o IO de um agente nos ficheiros de log.
-        run_log é opcional — se fornecido, regista também em memória.
+        Records an agent's IO in the log files.
+        run_log is optional — if provided, also records it in memory.
         """
         if agent_name in self._arch_specific:
             self._open_log(agent_name)
@@ -185,12 +178,12 @@ class LogFileManager:
 
 
 # ---------------------------------------------------------------------------
-# Impressão colorida no terminal
+# Colored terminal output
 # ---------------------------------------------------------------------------
 def color_print(text: str, who: str, debug_mode: bool = True) -> None:
     """
-    Imprime texto colorido no terminal.
-    Se who == "DEBUG" e debug_mode == False, não imprime.
+    Prints colored text to the terminal.
+    If who == "DEBUG" and debug_mode == False, prints nothing.
     """
     if who == "DEBUG" and not debug_mode:
         return

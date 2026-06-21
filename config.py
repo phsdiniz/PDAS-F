@@ -1,8 +1,8 @@
 """
-config.py — Configuração centralizada do framework de benchmark MAS.
+config.py — Centralized configuration for the MAS benchmark framework.
 
-Todas as flags, modelos, caminhos e parâmetros dos experimentos vivem aqui.
-Nada mais no código deve ter valores hardcoded — importa deste ficheiro.
+All flags, models, paths, and experiment parameters live here.
+Nothing else in the code should have hardcoded values — import from this file.
 """
 
 from __future__ import annotations
@@ -13,19 +13,17 @@ from typing import Optional
 import os
 
 # ---------------------------------------------------------------------------
-# Raiz do projeto
+# Project root
 # ---------------------------------------------------------------------------
 PROJECT_ROOT   = Path(__file__).parent
 DATA_DIR       = PROJECT_ROOT / "data"
 FORMS_DIR      = DATA_DIR / "forms"
 PROMPTS_DIR    = PROJECT_ROOT / "prompts"
-PROMPTS_FF_MAP = PROMPTS_DIR / "FF_MAP"
-PROMPTS_PDAS   = PROMPTS_DIR / "PDAS"
 RESULTS_DIR    = PROJECT_ROOT / "results"
 
 
 # ---------------------------------------------------------------------------
-# Modelos disponíveis
+# Available models
 # ---------------------------------------------------------------------------
 class Model(str, Enum):
     # --- OpenAI (cloud) ---
@@ -35,8 +33,8 @@ class Model(str, Enum):
     GPT4O      = "gpt-4o"
     GPT4O_MINI = "gpt-4o-mini"
 
-    # --- Locais via Ollama (prefixo "ollama/") ---
-    # Instala com: ollama pull <nome>
+    # --- Local via Ollama ("ollama/" prefix) ---
+    # Install with: ollama pull <name>
     LLAMA31_8B  = "ollama/llama3.1:8b"
     LLAMA32_3B  = "ollama/llama3.2:3b"
     MISTRAL_7B  = "ollama/mistral:7b"
@@ -56,26 +54,22 @@ class Model(str, Enum):
 
     @property
     def ollama_model_name(self) -> str:
-        """Nome do modelo para passar ao cliente Ollama (sem prefixo)."""
+        """Model name to pass to the Ollama client (without the prefix)."""
         return self.value.replace("ollama/", "", 1)
 
 
 # ---------------------------------------------------------------------------
-# Arquitecturas disponíveis
+# Available architectures
 # ---------------------------------------------------------------------------
 class Architecture(str, Enum):
-    VANILLA = "vanilla"
-    FF_MAP  = "FF_MAP"
     PDAS    = "PDAS"
     PDAS_F  = "PDAS_F"
 
 
 # ---------------------------------------------------------------------------
-# Configuração por arquitectura
+# Per-architecture configuration
 # ---------------------------------------------------------------------------
 ARCHITECTURE_MODEL_DEFAULTS: dict[Architecture, Model] = {
-    Architecture.VANILLA: Model.GPT5_NANO,
-    Architecture.FF_MAP:  Model.GPT5_NANO,
     Architecture.PDAS:    Model.GPT5_NANO,
     Architecture.PDAS_F:  Model.GPT5_NANO,
 }
@@ -85,43 +79,35 @@ AGENT_MODEL_OVERRIDES: dict[Architecture, dict[str, Optional[Model]]] = {
         "planning_agent":    Model.QWEN3_30B,
         "evaluation_agent":  Model.QWEN3_30B,
         "interface_agent":   Model.LLAMA31_8B,
-        "intent_agent":      Model.QWEN3_30B,
         "validation_agent":  Model.LLAMA31_8B,
         "single_task_agent": Model.LLAMA31_8B,
-        "output_generator":  Model.QWEN3_30B,
-        "score_agent":       Model.LLAMA31_8B,
     },
     Architecture.PDAS: {
         "planning_agent":    Model.QWEN3_30B,
         "evaluation_agent":  Model.QWEN3_30B,
         "interface_agent":   Model.LLAMA31_8B,
-        "intent_agent":      Model.QWEN3_30B,
         "validation_agent":  Model.LLAMA31_8B,
         "single_task_agent": Model.LLAMA31_8B,
-        "output_generator":  Model.QWEN3_30B,
-        "score_agent":       Model.LLAMA31_8B,
     },
-    Architecture.FF_MAP:  {},
-    Architecture.VANILLA: {},
 }
 
 
 # ---------------------------------------------------------------------------
-# Configuração de execução
+# Run configuration
 # ---------------------------------------------------------------------------
 @dataclass
 class RunConfig:
     """
-    Parâmetros de uma execução/simulação. Instanciado pelo CLI (main.py)
-    ou directamente em scripts de experimento.
+    Parameters for a single run/simulation. Instantiated by the CLI
+    (main.py) or directly in experiment scripts.
     """
 
-    # --- Arquitectura e modelo ---
+    # --- Architecture and model ---
     architecture: Architecture    = Architecture.PDAS
-    model_override: Optional[str] = None  # sobrescreve todos os agentes
+    model_override: Optional[str] = None  # overrides every agent
     auto_user_model: str          = "gpt-4o"
 
-    # --- Flags de comportamento ---
+    # --- Behaviour flags ---
     debug_mode: bool       = False
     auto_user: bool        = False
     use_full_context: bool = True
@@ -130,40 +116,60 @@ class RunConfig:
     # --- Batch ---
     num_simulations: int = 1
 
-    # --- Limites e segurança ---
-    max_intent_attempts: int     = 5
+    # --- Limits and safety nets ---
+    # Max attempts for the Planning Agent's form-identification invocation
+    # (see agents.PDAS.call_planning_agent_identify_form) before giving up.
+    max_form_identification_attempts: int = 5
     max_validation_attempts: int = 3
     max_plan_stages: int         = 20
 
-    # --- Reprodutibilidade ---
-    # Se definido, o utilizador simulado é sempre escolhido de forma determinística.
-    # Útil para comparar arquitecturas em condições controladas.
+    # Maximum number of times the Planning Agent can be called to revise
+    # the current stage after a NOT_VALIDATED from the Validation Agent on
+    # a Task Agent's output. Once exceeded, the system records an explicit
+    # failure state and proceeds with the last output generated
+    # (see graphs/shared_nodes.node_escalate_output_validation).
+    max_replanning_attempts: int = 2
+
+    # hit_rate threshold that separates exploitation (refine the existing
+    # plan, <10% changes) from exploration (explore new groupings/flows,
+    # up to 20% changes) in PlanningAgentWithFeedback, and that bounds
+    # when the EvaluationAgent may produce the "mudar" list.
+    # Single source of truth — never hardcoded in the prompts.
+    hit_rate_threshold: float = 0.7
+
+    # --- Reproducibility ---
+    # If set, the simulated user is always chosen deterministically.
+    # Useful for comparing architectures under controlled conditions.
     auto_user_seed: Optional[int] = None
 
-    # --- Construção do grafo com o graphviz ---
+    # --- Graph rendering with graphviz ---
     viz: bool  = True
 
-    # --- Mensagens fixas ---
+    # --- Fixed messages ---
     greeting_message: str = "Olá, como posso ajudá-lo?"
 
     def __post_init__(self) -> None:
-        """Valida os campos após inicialização para falhar cedo e com mensagem clara."""
+        """Validate fields on init to fail fast with a clear message."""
         if self.num_simulations < 1:
             raise ValueError("num_simulations deve ser >= 1")
-        if self.max_intent_attempts < 1:
-            raise ValueError("max_intent_attempts deve ser >= 1")
+        if self.max_form_identification_attempts < 1:
+            raise ValueError("max_form_identification_attempts deve ser >= 1")
         if self.max_validation_attempts < 1:
             raise ValueError("max_validation_attempts deve ser >= 1")
         if self.max_plan_stages < 1:
             raise ValueError("max_plan_stages deve ser >= 1")
+        if self.max_replanning_attempts < 1:
+            raise ValueError("max_replanning_attempts deve ser >= 1")
+        if not (0.0 <= self.hit_rate_threshold <= 1.0):
+            raise ValueError("hit_rate_threshold deve estar entre 0 e 1")
 
     def model_for_agent(self, agent_name: str) -> str:
         """
-        Devolve o nome do modelo a usar para um agente específico.
-        Prioridade: model_override > AGENT_MODEL_OVERRIDES > ARCHITECTURE_MODEL_DEFAULTS
+        Returns the model name to use for a specific agent.
+        Priority: model_override > AGENT_MODEL_OVERRIDES > ARCHITECTURE_MODEL_DEFAULTS
 
-        Aceita str directa (ex: "ollama/llama3.1:8b").
-        O prefixo "ollama/" é sinal para o base.py usar o cliente Ollama.
+        Accepts a plain string too (e.g. "ollama/llama3.1:8b").
+        The "ollama/" prefix signals base.py to use the Ollama client.
         """
         if agent_name == "auto_user_agent":
             return self.auto_user_model
@@ -174,7 +180,7 @@ class RunConfig:
         overrides   = AGENT_MODEL_OVERRIDES.get(self.architecture, {})
         agent_model = overrides.get(agent_name)
         if agent_model:
-            # Os valores em AGENT_MODEL_OVERRIDES são sempre instâncias de Model
+            # Values in AGENT_MODEL_OVERRIDES are always Model instances
             return agent_model.value
 
         default = ARCHITECTURE_MODEL_DEFAULTS[self.architecture]
@@ -182,21 +188,21 @@ class RunConfig:
 
 
 # ---------------------------------------------------------------------------
-# Configuração de logging / Langfuse
+# Logging / Langfuse configuration
 # ---------------------------------------------------------------------------
 @dataclass
 class ObservabilityConfig:
     """
-    Configurações do Langfuse.
+    Langfuse settings.
 
     Setup:
-        1. Criar conta em cloud.langfuse.com (plano gratuito)
-        2. Settings → API Keys → criar par public/secret
-        3. Definir variáveis de ambiente:
+        1. Create an account at cloud.langfuse.com (free tier)
+        2. Settings → API Keys → create a public/secret pair
+        3. Set environment variables:
             export LANGFUSE_PUBLIC_KEY="pk-lf-..."
             export LANGFUSE_SECRET_KEY="sk-lf-..."
             export LANGFUSE_HOST="https://cloud.langfuse.com"   # EU
-            # ou "https://us.cloud.langfuse.com"                # US
+            # or "https://us.cloud.langfuse.com"                # US
     """
     enabled: bool = bool(
         os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_KEY")
@@ -204,14 +210,14 @@ class ObservabilityConfig:
     project_name: str = os.getenv("LANGFUSE_PROJECT", "mas-benchmark")
 
     def apply(self) -> None:
-        """Desativa o LangSmith/LangChain tracing para evitar erros 403."""
+        """Disable LangSmith/LangChain tracing to avoid 403 errors."""
         os.environ["LANGCHAIN_TRACING_V2"] = "false"
         os.environ["LANGSMITH_TRACING"]    = "false"
 
     def get_callback(self):
         """
-        Devolve o CallbackHandler do Langfuse, ou None se não estiver configurado.
-        Passar ao graph.invoke(): config={"callbacks": [handler]}
+        Returns the Langfuse CallbackHandler, or None if not configured.
+        Pass to graph.invoke(): config={"callbacks": [handler]}
         """
         if not self.enabled:
             return None
@@ -223,7 +229,7 @@ class ObservabilityConfig:
             return None
 
     def verify_connection(self) -> bool:
-        """Verifica se as credenciais estão correctas antes de correr."""
+        """Check that the credentials are correct before running."""
         if not self.enabled:
             return False
         try:
@@ -241,14 +247,14 @@ class ObservabilityConfig:
 
 
 # ---------------------------------------------------------------------------
-# Instâncias prontas a importar
+# Ready-to-import instances
 # ---------------------------------------------------------------------------
 default_run   = RunConfig()
 observability = ObservabilityConfig()
 
 
 # ---------------------------------------------------------------------------
-# Paleta de cores para terminal
+# Terminal color palette
 # ---------------------------------------------------------------------------
 class Colors:
     BLUE    = "\033[34m"

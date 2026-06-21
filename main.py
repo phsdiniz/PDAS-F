@@ -1,23 +1,20 @@
 """
-main.py — Entry point do CLI.
+main.py — CLI entry point.
 
-Exemplos de uso:
-    # 5 simulações, PDAS, auto-user, debug
+Usage examples:
+    # 5 simulations, PDAS, auto-user, debug
     python main.py -n 5 --mode PDAS --auto-user --debug
 
-    # 1 simulação, vanilla, utilizador real
-    python main.py --mode vanilla
-
-    # Forçar um modelo para todos os agentes
+    # Force a single model for every agent
     python main.py --mode PDAS --model gpt-5
 
-    # Planning com feedback, 10 runs (aprende entre runs)
+    # Planning with feedback, 10 runs (learns across runs)
     python main.py -n 10 --mode PDAS_F --auto-user
 
-    # Mudar só o modelo do utilizador simulado
+    # Change only the simulated user's model
     python main.py --mode PDAS --auto-user --auto-user-model gpt-4o-mini --model gpt-5-nano
 
-    # Seed para reprodutibilidade (mesmo perfil de utilizador em todas as runs)
+    # Seed for reproducibility (same user profile across every run)
     python main.py -n 5 --mode PDAS --auto-user --auto-user-seed 42
 """
 
@@ -86,6 +83,24 @@ def parse_args() -> argparse.Namespace:
         help="Activa o ValidationAgent real (por defeito usa fake=VALIDATED)",
     )
     parser.add_argument(
+        "--max-replanning-attempts",
+        type=int, default=2,
+        help=(
+            "Nº máximo de vezes que o Planning Agent revê a etapa atual "
+            "depois de um NOT_VALIDATED do Validation Agent sobre o output "
+            "do Task Agent, antes de escalar (default=2)."
+        ),
+    )
+    parser.add_argument(
+        "--hit-rate-threshold",
+        type=float, default=0.7,
+        help=(
+            "Threshold de hit_rate que separa exploitation (<10%% de mudanças) "
+            "de exploration (até 20%% de mudanças) no PlanningAgentWithFeedback "
+            "(default=0.7)."
+        ),
+    )
+    parser.add_argument(
         "--no-langfuse",
         action="store_true",
         help="Desativa o Langfuse mesmo que as variáveis de ambiente estejam definidas",
@@ -97,13 +112,13 @@ def parse_args() -> argparse.Namespace:
 def main():
     args = parse_args()
 
-    # Configurar observabilidade
+    # Configure observability
     obs = ObservabilityConfig()
 
     if args.no_langfuse:
         obs.enabled = False
 
-    obs.apply()  # desativa LangSmith/LangChain tracing
+    obs.apply()  # disable LangSmith/LangChain tracing
 
     if obs.enabled:
         obs.verify_connection()
@@ -111,23 +126,25 @@ def main():
     langfuse_callback = obs.get_callback()
 
     run_cfg = RunConfig(
-        architecture     = Architecture(args.mode),
-        model_override   = args.model,
-        auto_user_model  = args.auto_user_model,
-        auto_user_seed   = args.auto_user_seed,
-        debug_mode       = args.debug,
-        auto_user        = args.auto_user,
-        use_full_context = not args.no_full_context,
-        fake_validation  = not args.real_validation,
-        num_simulations  = args.num_simulacoes,
+        architecture             = Architecture(args.mode),
+        model_override           = args.model,
+        auto_user_model          = args.auto_user_model,
+        auto_user_seed           = args.auto_user_seed,
+        debug_mode               = args.debug,
+        auto_user                = args.auto_user,
+        use_full_context         = not args.no_full_context,
+        fake_validation          = not args.real_validation,
+        num_simulations          = args.num_simulacoes,
+        max_replanning_attempts  = args.max_replanning_attempts,
+        hit_rate_threshold       = args.hit_rate_threshold,
     )
 
     try:
         run_batch(run_cfg, langfuse_callback=langfuse_callback)
     except KeyboardInterrupt:
-        print("\n[INFO] Execução interrompida pelo utilizador.")
+        print("\n[INFO] Execution interrupted by the user.")
     except Exception as e:
-        print(f"[ERROR] Falha na execução: {e}")
+        print(f"[ERROR] Execution error: {e}")
         raise
 
 

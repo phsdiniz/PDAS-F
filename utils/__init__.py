@@ -1,1 +1,1 @@
-"""utils/ — Utilitários partilhados entre arquitecturas."""
+"""utils/ — Utilities shared across architectures."""

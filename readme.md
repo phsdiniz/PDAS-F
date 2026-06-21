@@ -10,8 +10,6 @@ scattered across the codebase.
 #### 1. Model per architecture (default)
 ```python
 ARCHITECTURE_MODEL_DEFAULTS = {
-    Architecture.VANILLA: Model.GPT5_NANO,
-    Architecture.FF_MAP:  Model.GPT5_NANO,
     Architecture.PDAS:    Model.GPT5_MINI,
     Architecture.PDAS_F:  Model.GPT5,
 }
@@ -21,8 +19,8 @@ ARCHITECTURE_MODEL_DEFAULTS = {
 ```python
 AGENT_MODEL_OVERRIDES = {
     Architecture.PDAS_F: {
-        "planning_agent":   Model.GPT5,      # agente mais pesado → modelo maior
-        "intent_agent":     Model.GPT5_NANO, # tarefa simples → modelo leve
+        "planning_agent":   Model.GPT5,      # heaviest agent → bigger model
+        "interface_agent":  Model.GPT5_NANO, # simple task → lightweight model
         ...
     }
 }
@@ -112,13 +110,11 @@ app/
 ├── data/
 │   ├── forms/             ← formulario_*.json  (1–5)
 │   └── auto_users.txt     ← simulated user profiles (50 profiles)
-├── prompts/               ← shared agent *.txt prompts
-│   ├── FF_MAP/            ← FF_MAP architecture
-│   └── PDAS/              ← PDAS / PDAS_F architectures
+├── prompts/               ← every agent prompt (*.txt), flat — both
+│                              architectures (PDAS and the PDAS_F variant)
+│                              share the same prompt set
 ├── agents/                ← one file per agent
 ├── architectures/         ← one file per architecture (LangGraph graphs)
-│   ├── vanilla.py
-│   ├── FF_MAP.py
 │   ├── PDAS.py
 │   └── PDAS_F.py
 ├── graphs/                ← reusable LangGraph nodes across architectures
@@ -135,10 +131,30 @@ app/
 
 | CLI value | Class | Description |
 |---|---|---|
-| `vanilla` | `Architecture.VANILLA` | Monolithic agent — a single LLM handles the entire conversation |
-| `FF_MAP` | `Architecture.FF_MAP` | Fixed network of specialized agents per field |
 | `PDAS` | `Architecture.PDAS` | Planning + step-by-step execution, no inter-run feedback |
 | `PDAS_F` | `Architecture.PDAS_F` | PDAS with EvaluationAgent feedback between runs |
+
+Both architectures share the same per-turn execution loop (see
+`architectures/PDAS.py` for the diagram). There is no separate Intent
+Agent, Output Generator Agent, or Score Agent — their responsibilities
+were folded into the Planning Agent and the Validation Agent:
+
+- The **Planning Agent**'s first invocation of a session identifies which
+  form the user wants to fill in (`identify_form`), before any plan
+  exists, instead of a dedicated intent-detection step.
+- The **Validation Agent** is invoked twice per stage — once on the Task
+  Agent's output (`validate_output`, triggering in-session replanning via
+  the Planning Agent on `NOT_VALIDATED`, capped by
+  `RunConfig.max_replanning_attempts`) and once on the user's reply
+  (`validate`, looping through the Interface Agent up to
+  `RunConfig.max_validation_attempts`). On the plan's final stage, a
+  `VALIDATED` output-validation response also carries the fully compiled
+  filled form (`final_output`), which becomes `state["filled_form"]` —
+  there is no separate form-compilation or scoring step.
+
+Exceeding either validation limit logs an explicit failure state to
+`state["escalations"]` instead of looping indefinitely or silently
+treating the output as valid.
 
 ---
 
@@ -166,8 +182,8 @@ Nodes must return only the delta of each call — LangGraph handles accumulation
 ```python
 # CORRECT
 return {
-    "total_input_tokens":  result.input_tokens,   # delta desta chamada
-    "total_output_tokens": result.output_tokens,  # delta desta chamada
+    "total_input_tokens":  result.input_tokens,   # this call's delta
+    "total_output_tokens": result.output_tokens,  # this call's delta
 }
 
 # WRONG — causes double counting

@@ -1,7 +1,7 @@
 """
-experiments/runner.py — Runner de batch (N simulações × arquitectura × modelo).
+experiments/runner.py — Batch runner (N simulations × architecture × model).
 
-Exemplo de uso programático:
+Programmatic usage example:
     from config import RunConfig, Architecture
     from experiments.runner import run_batch
 
@@ -24,8 +24,6 @@ from config import RunConfig, RESULTS_DIR, Architecture
 from utils.logging import RunLog, color_print
 
 _RUNNERS = {
-    Architecture.VANILLA: "architectures.vanilla",
-    Architecture.FF_MAP:  "architectures.FF_MAP",
     Architecture.PDAS:    "architectures.PDAS",
     Architecture.PDAS_F:  "architectures.PDAS_F",
 }
@@ -39,17 +37,16 @@ def _get_runner(arch: Architecture):
 
 def _display_model(run_cfg: RunConfig) -> str:
     """
-    Devolve um modelo representativo para exibir no log de progresso.
-    Usa o agente mais pesado/relevante de cada arquitectura.
-    Para arquitecturas sem planning_agent, cai no modelo default da arquitectura.
+    Returns a representative model to display in the progress log.
+    Uses the heaviest/most relevant agent of each architecture.
+    For architectures without a planning_agent, falls back to the
+    architecture's default model.
     """
     agent_map = {
         Architecture.PDAS:    "planning_agent",
         Architecture.PDAS_F:  "planning_agent",
-        Architecture.FF_MAP:  "interface_agent",
-        Architecture.VANILLA: "vanilla_agent",
     }
-    agent = agent_map.get(run_cfg.architecture, "interface_agent")
+    agent = agent_map.get(run_cfg.architecture, "planning_agent")
     return run_cfg.model_for_agent(agent)
 
 
@@ -59,15 +56,15 @@ def run_batch(
     langfuse_callback=None,
 ) -> list[dict]:
     """
-    Executa N simulações com a configuração dada.
+    Runs N simulations with the given configuration.
 
     Args:
-        run_cfg:            Configuração da run (arquitectura, modelo, flags, N).
-        batch_dir:          Directoria para guardar resultados. Se None, cria automaticamente.
-        langfuse_callback:  CallbackHandler do Langfuse (ou None para desativar tracing).
+        run_cfg:            Run configuration (architecture, model, flags, N).
+        batch_dir:          Directory to save results in. If None, created automatically.
+        langfuse_callback:  Langfuse CallbackHandler (or None to disable tracing).
 
     Returns:
-        Lista de dicts de métricas (uma por simulação).
+        List of metric dicts (one per simulation).
     """
     if batch_dir is None:
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

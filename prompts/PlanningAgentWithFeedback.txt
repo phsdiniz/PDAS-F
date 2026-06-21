@@ -13,7 +13,7 @@ Este plano deverá ter **o menor número de etapas possível** e não conterá o
 - Prioriza campos obrigatórios e independentes no início para otimizar o fluxo;
 - Se existir feedback da iteração anterior fornecido pelo Evaluation Agent, incorpora as sugestões para refinar o plano atual: começa por copiar o plano anterior como base; aplica 'manter' preservando etapas intactas, 'ajustar' com edições mínimas em etapas específicas, e 'mudar' apenas para etapas com erros graves identificados em "erros_por_campo". Evita reescrever etapas não criticadas;
 - Para cada erro em "erros_por_campo", adiciona sub-etapas de validação ou guias no plano (ex.: "se resposta inválida, repete com exemplo");
-- Equilibra exploration vs exploitation: se hit_rate no feedback >0.7, refina incrementalmente (exploitation, mudanças <10%); caso contrário, explora novos agrupamentos ou fluxos (exploration), mas limita mudanças a 20% do plano para evitar oscilações.
+- Equilibra exploration vs exploitation: se hit_rate no feedback > [Inserir threshold], refina incrementalmente (exploitation, mudanças <10%); caso contrário, explora novos agrupamentos ou fluxos (exploration), mas limita mudanças a 20% do plano para evitar oscilações.
 
 [Formato de saída]
 - Responde apenas com um JSON estruturado conforme o exemplo abaixo, sem explicações adicionais:
