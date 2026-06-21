@@ -30,10 +30,10 @@ AGENT_MODEL_OVERRIDES = {
 ```python
 run = RunConfig(
     architecture    = Architecture.PDAS,
-    model_override  = "gpt-5-mini",   # força um modelo para TODOS os agentes
+    model_override  = "gpt-5-mini",          # enforces a single model for ALL agents
     debug_mode      = True,
     auto_user       = True,
-    auto_user_seed  = 42,             # reprodutibilidade: mesmo perfil em todas as runs
+    auto_user_seed  = 42,                    # reproducibility: the same profile in all runs
     num_simulations = 5,
 )
 ```
